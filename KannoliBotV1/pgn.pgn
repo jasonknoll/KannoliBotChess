@@ -1,0 +1,20 @@
+[Event "Casual Classical game"]
+[Site "https://lichess.org/EDymbPH8"]
+[Date "2023.11.26"]
+[White "KannoliBot"]
+[Black "lichess AI level 1"]
+[Result "0-1"]
+[UTCDate "2023.11.26"]
+[UTCTime "22:59:37"]
+[WhiteElo "2000"]
+[BlackElo "?"]
+[WhiteTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "3600+5"]
+[ECO "A00"]
+[Opening "Amar Opening"]
+[Termination "Normal"]
+
+1. Nh3 { [%clk 1:00:00] } 1... d6 { [%clk 1:00:00] } 2. Rg1 { [%clk 1:00:04] } 2... Nf6 { [%clk 1:00:03] } 3. Rh1 { [%clk 1:00:08] } 3... Nc6 { [%clk 1:00:07] } 4. Rg1 { [%clk 1:00:12] } 4... h6 { [%clk 1:00:09] } 5. Ng5 { [%clk 1:00:11] } 5... d5 { [%clk 1:00:12] } 6. Nxf7 { [%clk 1:00:15] } 6... Bg4 { [%clk 1:00:12] } 7. Nxd8 { [%clk 1:00:16] } 0-1
+
+
