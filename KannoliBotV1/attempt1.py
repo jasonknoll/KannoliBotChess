@@ -68,7 +68,7 @@ def minimaxRoot(depth, board, isMaximizing):
 
 
 def minimax(depth, board, is_maximizing):
-    if(depth == 0):
+    if (depth == 0):
         return -evaluation(board)
     possibleMoves = board.legal_moves
     if(is_maximizing):
@@ -100,7 +100,7 @@ def evaluation(board):
     while i < 63:
         i += 1
         evaluation = evaluation + (getPieceValue(str(board.piece_at(i))) if x else -getPieceValue(str(board.piece_at(i))))
-    print(f"Evaluation: {evaluation}")
+    #print(f"Evaluation: {evaluation}")
     return evaluation
 
 
@@ -124,12 +124,18 @@ def getPieceValue(piece):
     return value
 
 
-def minmax_move(fen):
+def minmax_move(fen, color):
     board = chess.Board(fen)
 
-    move = minimaxRoot(2, board, False)
+    maximizing = False
+
+    if color == "white":
+        maximizing = True
+
+    move = minimaxRoot(4, board, maximizing)
     print(move)
     return move
+
 
 
 def random_move(fen):
@@ -165,10 +171,10 @@ def play_lichess_game(token: str):
 
     # Starting a new game with the Lichess API
     response = client.challenges.create_ai(
-        clock_limit=3600,  # Time limit for each player's moves (in seconds)
-        clock_increment=5,  # Increment added to each player's clock after a move (in seconds)
-        color="white",  # Randomly assign the color (white or black) to the player
-        level=1  # Level of the AI opponent (ranging from 1 to 8)
+        clock_limit=600,  # Time limit for each player's moves (in seconds)
+        clock_increment=0,  # Increment added to each player's clock after a move (in seconds)
+        color="random",  # Randomly assign the color (white or black) to the player
+        level=5  # Level of the AI opponent (ranging from 1 to 8)
     )
 
     # Extracting the game ID from the API response
@@ -178,6 +184,7 @@ def play_lichess_game(token: str):
     print(f"Game ID: {game_id}")
 
     game = get_ongoing_game()
+    color = game['color']
     # status = client.games.export(game_id)['status']
 
     time.sleep(5)
@@ -188,14 +195,14 @@ def play_lichess_game(token: str):
         if game is not None:
             if game['isMyTurn'] == True:
                 #move = random_move(game['fen'])
-                move = minmax_move(game['fen'])
+                move = minmax_move(game['fen'], color)
                 # TODO Make the engine instead of random move
                 try:
                     client.bots.make_move(game_id, move)
                 except Exception as e:
                     print(f"Trouble making move: {e}")
             elif game['isMyTurn'] == False:
-                time.sleep(4)
+                time.sleep(2)
         else:
             break
 
