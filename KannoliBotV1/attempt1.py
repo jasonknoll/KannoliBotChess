@@ -127,16 +127,34 @@ def getPieceValue(piece):
 def minmax_move(fen, color):
     board = chess.Board(fen)
 
-    maximizing = False
+    move_number = get_move_number(fen)
 
-    if color == "white":
-        maximizing = True
+    opening_moves_black = ["e7e5", "d7d5"]
 
-    move = minimaxRoot(4, board, maximizing)
-    print(move)
-    return move
+    opening_moves_white = ["e2e4", "d2d4"]
 
 
+    if move_number < 2:
+        if color == "white":
+            return random.choice(opening_moves_white)
+        else:
+            return random.choice(opening_moves_black)
+    else:
+
+        maximizing = False
+
+        if color == "white":
+            maximizing = True
+
+        move = minimaxRoot(3, board, maximizing)
+        print(move)
+        return move
+
+
+def get_move_number(fen):
+    number = int(fen[-1])
+
+    return number
 
 def random_move(fen):
     board = chess.Board(fen)
