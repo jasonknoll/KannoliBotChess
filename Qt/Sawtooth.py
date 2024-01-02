@@ -12,8 +12,14 @@
 # 3. Display current board state (including opponent -- would be cool)
 # 4. Display calculation data
 
+import sys
 import chess
 import chess.pgn
 import chess.svg
 import berserk # lichess api
 from PySide6 import QtCore, QtWidgets, QtGui
+
+# main window loop
+app = QtWidgets.QApplication(sys.argv)
+
+app.exec()
