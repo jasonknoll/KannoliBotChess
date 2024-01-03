@@ -13,11 +13,20 @@
 # 4. Display calculation data
 
 import sys
+import random
 import chess
 import chess.pgn
 import chess.svg
 import berserk # lichess api
 from PySide6 import QtCore, QtWidgets, QtGui
+
+piece_values = {
+    "PAWN" : 1,
+    "KNIGHT" : 3,
+    "BISHOP" : 3.3,
+    "ROOK" : 5,
+    "QUEEN" : 9
+}
 
 # main window loop
 app = QtWidgets.QApplication(sys.argv)
