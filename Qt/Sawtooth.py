@@ -18,7 +18,7 @@ import chess
 import chess.pgn
 import chess.svg
 import berserk # lichess api
-from PySide6 import QtCore, QtWidgets, QtGui
+#from PySide6 import QtCore, QtWidgets, QtGui
 
 
 # Get board evaluation
@@ -32,22 +32,53 @@ def evaluate_board(board):
             value = {
                 chess.PAWN: 1,
                 chess.KNIGHT: 3,
-                chess.BISHOP: 3,
+                chess.BISHOP: 3.3,
                 chess.ROOK: 5,
                 chess.QUEEN: 9,
                 chess.KING: 0  # Assuming kings have no material value for basic evaluation
             }.get(piece.piece_type, 0)
 
             if piece.color == chess.WHITE:
-                score += value
+                score += value + get_piece_square_value(piece, square)
             else:
-                score -= value
+                score -= value + get_piece_square_value(piece, square)
 
     return score
 
-fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-board = chess.Board(fen)
-print("Board Evaluation:", evaluate_board(board))
+
+# Get piece positional scores
+def get_piece_square_value(piece, square):
+    # Assign values based on piece square tables
+    piece_square_tables = {
+        chess.PAWN: [
+            0,    0,   0,   0,    0,   0,   0,  0,
+            .5, .10, .10, -.20, -.20, .10, .10, .5,
+            .5, -.5, -.10,  0,  0, -.10, -.5, .5,
+            0,    0,   0, .20, .20,  0,   0,  0,
+            .5,  .5, .10, .25, .25, .10,  .5, .5,
+            .10, .10, .20, .30, .30, .20, .10, .10,
+            .50, .50, .50, .50, .50, .50, .50, .50,
+            0,    0,   0,   0,    0,  0,   0,   0
+        ],
+        # Similar tables for other pieces can be added
+    }
+
+    index = square if piece.color == chess.WHITE else chess.square_mirror(square)
+    try:
+        return piece_square_tables.get(piece.piece_type, [0])[index]
+    except:
+        #print(f"That piece is not added to the table yet!")
+        return 0
+
+
+def demo():
+    board = chess.Board(chess.STARTING_FEN)
+    board.push(chess.Move.from_uci("e2e4"))
+    print("Board Evaluation after white e4:", round(evaluate_board(board), 2))
+    board.push(chess.Move.from_uci("e7e6"))
+    print("Board Evaluation after black e5:", round(evaluate_board(board), 2))
+
+demo()
 
 # main window loop
 #app = QtWidgets.QApplication(sys.argv)
