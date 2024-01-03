@@ -20,15 +20,35 @@ import chess.svg
 import berserk # lichess api
 from PySide6 import QtCore, QtWidgets, QtGui
 
-piece_values = {
-    "PAWN" : 1,
-    "KNIGHT" : 3,
-    "BISHOP" : 3.3,
-    "ROOK" : 5,
-    "QUEEN" : 9
-}
+
+# Get board evaluation
+def evaluate_board(board):
+    score = 0
+
+    for square in chess.SQUARES:
+        piece = board.piece_at(square)
+
+        if piece is not None:
+            value = {
+                chess.PAWN: 1,
+                chess.KNIGHT: 3,
+                chess.BISHOP: 3,
+                chess.ROOK: 5,
+                chess.QUEEN: 9,
+                chess.KING: 0  # Assuming kings have no material value for basic evaluation
+            }.get(piece.piece_type, 0)
+
+            if piece.color == chess.WHITE:
+                score += value
+            else:
+                score -= value
+
+    return score
+
+fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+board = chess.Board(fen)
+print("Board Evaluation:", evaluate_board(board))
 
 # main window loop
-app = QtWidgets.QApplication(sys.argv)
-
-app.exec()
+#app = QtWidgets.QApplication(sys.argv)
+#app.exec()
