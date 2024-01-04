@@ -67,6 +67,8 @@ def search(board, depth=3, alpha=0, beta=0):
         
     return alpha
 
+
+# 15:31 in Seb Lague video
 def order_moves(moves):
     for move in moves:
         move_score_guess = 0
