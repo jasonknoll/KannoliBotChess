@@ -46,6 +46,34 @@ def evaluate_board(board):
     return score
 
 
+def search(board, depth=3, alpha=0, beta=0):
+    if (depth == 0):
+        return round(evaluate_board(board), 2)
+
+    moves = board.legal_moves
+    if (moves.count == 0):
+        if (board.is_check()):
+            return -9999
+        return 0
+
+    for move in moves:
+        #print(move) # just to see formatting
+        board.push(chess.Move.from_uci(move))
+        evaluation = -search(depth - 1, -alpha, -beta)
+        board.pop()
+        if (evaluation >= beta):
+            return beta
+        alpha = max(alpha, evaluation)
+        
+    return alpha
+
+def order_moves(moves):
+    for move in moves:
+        move_score_guess = 0
+        move_piece_type = chess.piece_at(move.to_square)
+
+
+
 # Get piece positional scores
 def get_piece_square_value(piece, square):
     # Assign values based on piece square tables
@@ -75,9 +103,7 @@ def demo():
     board = chess.Board(chess.STARTING_FEN)
     board.push(chess.Move.from_uci("e2e4"))
     print("Board Evaluation after white e4:", round(evaluate_board(board), 2))
-    board.push(chess.Move.from_uci("e7e6"))
-    print("Board Evaluation after black e5:", round(evaluate_board(board), 2))
-
+    #print(f"Board moves list: {search(board)}")
 demo()
 
 # main window loop
