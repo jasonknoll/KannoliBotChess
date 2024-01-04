@@ -46,26 +46,35 @@ def evaluate_board(board):
     return score
 
 
-def search(board, depth=3, alpha=0, beta=0):
-    if (depth == 0):
+def search(board, depth=3, alpha=-9999, beta=9999):
+    if depth == 0:
         return round(evaluate_board(board), 2)
 
-    moves = board.legal_moves
-    if (moves.count == 0):
-        if (board.is_check()):
+    moves = list(board.legal_moves)
+    if not moves:
+        if board.is_check():
             return -9999
         return 0
 
+    best_move = None  # Introduce a variable to track the best move
+
     for move in moves:
-        #print(move) # just to see formatting
-        board.push(chess.Move.from_uci(move))
-        evaluation = -search(depth - 1, -alpha, -beta)
+        board.push(move)
+        evaluation = -search(board, depth - 1, -beta, -alpha)
         board.pop()
-        if (evaluation >= beta):
+
+        if evaluation >= beta:
             return beta
-        alpha = max(alpha, evaluation)
-        
-    return alpha
+
+        if evaluation > alpha:
+            alpha = evaluation
+            if depth == 3:  # Only update the best move at the root level
+                best_move = move
+
+    if depth == 3:
+        return best_move  # Return the best move at the root level
+    else:
+        return alpha
 
 
 # 15:31 in Seb Lague video
@@ -144,7 +153,7 @@ def demo():
     board = chess.Board(chess.STARTING_FEN)
     board.push(chess.Move.from_uci("e2e4"))
     print("Board Evaluation after white e4:", round(evaluate_board(board), 2))
-    #print(f"Board moves list: {search(board)}")
+    print(f"Best move: {search(board)}")
 demo()
 
 # main window loop
