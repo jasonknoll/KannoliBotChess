@@ -72,7 +72,7 @@ def search(board, depth=3, alpha=-9999, beta=9999):
                 best_move = move
 
     if depth == 3:
-        return best_move  # Return the best move at the root level
+        return str(best_move)  # Return the best move at the root level
     else:
         return alpha
 
@@ -154,7 +154,28 @@ def demo():
     board.push(chess.Move.from_uci("e2e4"))
     print("Board Evaluation after white e4:", round(evaluate_board(board), 2))
     print(f"Best move: {search(board)}")
-demo()
+#demo()
+
+def demo_match():
+    board = chess.Board(chess.STARTING_FEN)
+
+    # player == white
+    while(not board.is_game_over()):
+        if (board.turn):
+            try:
+                player_move = chess.Move.from_uci(input("> "))
+                if player_move not in board.legal_moves:
+                    raise Exception("Move not legal!")
+                else:
+                    board.push(player_move)
+            except Exception as e:
+                print(f"{e}")
+
+        else:
+            move = search(board)
+            print(f"Best move: {move}")
+            board.push(chess.Move.from_uci(move))
+demo_match()
 
 # main window loop
 #app = QtWidgets.QApplication(sys.argv)
