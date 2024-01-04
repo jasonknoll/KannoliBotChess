@@ -1,16 +1,24 @@
 # New chess bot with GUI
 
 # Minimum viable product can:
-# 0. Possess a working calculation function lmao
-# 1. Handle challenges from LiChess
+# 0. Possess a working calculation function lmao [x]
+# 1. Handle challenges from LiChess [~]
 # 2. Display the board of the current match being played
 # 3. Display data about search and eval
 
 # Macro steps
 # 1. Build a Qt gui window
-# 2. Get the calculation/best-move functions working (instead of just repeating moves)
+# 2. Get the calculation/best-move functions working (instead of just repeating moves) [x]
 # 3. Display current board state (including opponent -- would be cool)
 # 4. Display calculation data
+
+# TODO for bot improvement
+# - Pawns need to be used more
+# - Need to not move rooks so it can castle
+# - Capture with the weaker piece
+# - Check king to get tempo
+# - Use an opening
+# - End/middlegame strats
 
 import sys
 import random
@@ -46,7 +54,7 @@ def evaluate_board(board):
     return score
 
 
-def search(board, depth=3, alpha=-9999, beta=9999):
+def search(board, depth=6, alpha=-9999, beta=9999):
     if depth == 0:
         return round(evaluate_board(board), 2)
 
@@ -68,10 +76,10 @@ def search(board, depth=3, alpha=-9999, beta=9999):
 
         if evaluation > alpha:
             alpha = evaluation
-            if depth == 3:  # Only update the best move at the root level
+            if depth == 6:  # Only update the best move at the root level
                 best_move = move
 
-    if depth == 3:
+    if depth == 6:
         return str(best_move)  # Return the best move at the root level
     else:
         return alpha
