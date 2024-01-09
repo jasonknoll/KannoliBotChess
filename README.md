@@ -11,6 +11,7 @@ First install the required packages in your desired Python environment with pip:
 Then run Sawtooth in the command line by using: `python Sawtooth.py`
 
 ## TODO
+- [ ] Connect to Lichess API
 - [ ] Design and build Qt GUI
   - [ ] Add send/accept challenge functionality
   - [ ] Display current match data
