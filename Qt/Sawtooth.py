@@ -14,9 +14,9 @@
 
 # TODO for bot improvement
 # - Pawns need to be used more
-# - Need to not move rooks so it can castle
+# - Need to not move rook(s) so it can castle
 # - Capture with the weaker piece
-# - Check king to get tempo
+# - Check king to get move advantage
 # - Use an opening
 # - End/middlegame strats
 
