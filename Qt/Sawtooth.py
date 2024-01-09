@@ -54,7 +54,10 @@ def evaluate_board(board):
     return score
 
 
-def search(board, depth=6, alpha=-9999, beta=9999):
+def search(board, depth=6, alpha=-9999, beta=9999, root_depth=None):
+    if root_depth is None:
+        root_depth = depth
+    
     if depth == 0:
         return round(evaluate_board(board), 2)
 
@@ -68,7 +71,7 @@ def search(board, depth=6, alpha=-9999, beta=9999):
 
     for move in moves:
         board.push(move)
-        evaluation = -search(board, depth - 1, -beta, -alpha)
+        evaluation = -search(board, depth - 1, -beta, -alpha, root_depth)
         board.pop()
 
         if evaluation >= beta:
@@ -76,10 +79,10 @@ def search(board, depth=6, alpha=-9999, beta=9999):
 
         if evaluation > alpha:
             alpha = evaluation
-            if depth == 6:  # Only update the best move at the root level
+            if depth == root_depth:  # Only update the best move at the root level
                 best_move = move
 
-    if depth == 6:
+    if depth == root_depth:
         return str(best_move)  # Return the best move at the root level
     else:
         return alpha
