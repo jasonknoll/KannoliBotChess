@@ -156,14 +156,7 @@ def get_piece_square_value(piece, square):
         #print(f"That piece is not added to the table yet!")
         return 0
 
-
-def demo():
-    board = chess.Board(chess.STARTING_FEN)
-    board.push(chess.Move.from_uci("e2e4"))
-    print("Board Evaluation after white e4:", round(evaluate_board(board), 2))
-    print(f"Best move: {search(board)}")
-#demo()
-
+# Play against the bot in the command line
 def demo_match():
     board = chess.Board(chess.STARTING_FEN)
 
