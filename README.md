@@ -9,3 +9,12 @@ First install the required packages in your desired Python environment with pip:
 `pip install -r reqs.txt`
 
 Then run Sawtooth in the command line by using: `python Sawtooth.py`
+
+## TODO
+- [~] Design and build Qt GUI
+  - [ ] Add send/accept challenge functionality
+  - [ ] Display current match data
+  - [ ] Dispaly Lichess data (opponent name, ELO, etc.)
+- [ ] Optimization
+  - [ ] Move ordering
+  - [ ] Probably many other things lmao 
